@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import searchIcon from './search.svg';
 
+import MovieCard2 from './components/MovieCard2';
+
 const API_URL = 'https://www.omdbapi.com?apikey=22214b2e';
 
 const App2 = () => {
@@ -12,7 +14,6 @@ const App2 = () => {
     const response = await fetch(`${API_URL}&s=${title}`);
     const data = await response.json();
 
-    console.log(data.Search);
     setMovies(data.Search);
   };
 
@@ -27,7 +28,17 @@ const App2 = () => {
       <div className='search'>
         <input placeholder='Search movies' value={''} onChange={() => {}} />
 
-        <img src={searchIcon} alt='search' />
+        <img src={searchIcon} alt='search' onClick={() => {}} />
+      </div>
+
+      <div className='container'>
+        {movies.length > 0 ? (
+          movies.map((movie) => <MovieCard2 movie={movie} key={movie.imdbID} />)
+        ) : (
+          <div className='empty'>
+            <h3>No movies found</h3>
+          </div>
+        )}
       </div>
     </div>
   );
